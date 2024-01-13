@@ -8,7 +8,7 @@ function Dropdown() {
                 <div className='bg-gray-500 w-full h-0 lg:h-[0.5px] md:h-[0.5px]'></div>
                 <ul className='md:flex lg:flex justify-center md:space-x-11 lg:space-x-11  my-4  tracking-[1px] text-sm'>
                     <div>
-                        <Link href="products/walltiles" prefetch={false}><h2 className='font-bold text-lg text-blue-900 hover:text-blue-950 ml-6 md:ml-0 lg:ml-0' >WALL TILES</h2></Link>
+                        <Link href="/products/walltiles" ><h2 className='font-bold text-lg text-blue-900 hover:text-blue-950 ml-6 md:ml-0 lg:ml-0' >WALL TILES</h2></Link>
                         <Link href="/products/walltiles/bathroom" prefetch={false} className={styles.link} ><p className='py-1.5 ml-11 md:ml-0 lg:ml-0'>Bathroom Wall Tiles</p></Link>
                         <Link href="/products/walltiles/kitchen" prefetch={false} className={styles.link} ><p className='py-1.5 ml-11 md:ml-0 lg:ml-0'>Kitchen Wall Tiles</p></Link>
                         <Link href="/products/walltiles/outdoor" prefetch={false} className={styles.link} ><p className='py-1.5 ml-11 md:ml-0 lg:ml-0'>Outdoor Wall Tiles</p></Link>
@@ -16,7 +16,7 @@ function Dropdown() {
                         <Link href="/products/walltiles/livingroom" prefetch={false} className={styles.link} ><p className='py-1.5 ml-11 md:ml-0 lg:ml-0'>Living Room Wall Tiles</p></Link>
                     </div>
                     <div>
-                        <Link href="products/floortiles" prefetch={false}><h2 className='font-bold text-lg text-blue-900 hover:text-blue-950 ml-6 md:ml-0 lg:ml-0'>FLOOR TILES</h2></Link>
+                        <Link href="/products/floortiles" prefetch={false}><h2 className='font-bold text-lg text-blue-900 hover:text-blue-950 ml-6 md:ml-0 lg:ml-0'>FLOOR TILES</h2></Link>
                         <Link href="/products/floortiles/outdoor" prefetch={false} className={styles.link} ><p className='py-1.5 ml-11 md:ml-0 lg:ml-0'>Outdoor Floor Tiles</p></Link>
                         <Link href="/products/floortiles/livingroom" prefetch={false} className={styles.link} ><p className='py-1.5 ml-11 md:ml-0 lg:ml-0'>Living Room Floor Tiles</p></Link>
                         <Link href="/products/floortiles/bedroom" prefetch={false} className={styles.link} ><p className='py-1.5 ml-11 md:ml-0 lg:ml-0'>Bedroom Floor Tiles</p></Link>
@@ -25,7 +25,7 @@ function Dropdown() {
 
                     </div>
                     <div>
-                        <Link href="products/granitesandmarbles" prefetch={false}><h2 className='font-bold text-lg text-blue-900 hover:text-blue-950 ml-6 md:ml-0 lg:ml-0'>GRANITES AND MARBLES</h2></Link>
+                        <Link href="/products/granitesandmarbles" prefetch={false}><h2 className='font-bold text-lg text-blue-900 hover:text-blue-950 ml-6 md:ml-0 lg:ml-0'>GRANITES AND MARBLES</h2></Link>
                         <Link href="/products/granitesandmarbles/Rajasthani"  prefetch={false}className={styles.link} ><p className='py-1.5 ml-11 md:ml-0 lg:ml-0'>Rajasthani</p></Link>
                         <Link href="/products/granitesandmarbles/South%20Indian" prefetch={false} className={styles.link} ><p className='py-1.5 ml-11 md:ml-0 lg:ml-0'>South Indian</p></Link>
                         <Link href="/products/granitesandmarbles/North%20Indian"  prefetch={false}className={styles.link} ><p className='py-1.5 ml-11 md:ml-0 lg:ml-0'>North Indian</p></Link>
