@@ -14,8 +14,8 @@ const page = () => {
   const [data, setData] = useState();
   const [select, setSelect] = useState(false);
   const [selectedPhotos, setSelectedPhotos] = useState([]);
-  // const { data: session } = useSession();
-  // const token = session?.user.token;
+  const { data: session } = useSession();
+  const token = session?.user.token;
 
   const tiles = "Floor Tiles";
   const searchParams = useSearchParams();
@@ -88,7 +88,7 @@ const page = () => {
 
   return (
     <>
-      {/* {token && (
+      {token && (
         <div>
           <button
             className="pl-4 ml-3 md:ml-0 bg-blue-950 hover:bg-white text-white  px-5 py-2 border border-blue-950 hover:text-blue-950"
@@ -96,7 +96,7 @@ const page = () => {
             Select
           </button>
         </div>
-      )} */}
+      )}
       <div className="p-6 md:ml-0 m-2 h-auto grid grid-cols-1 gap-6 lg:grid lg:grid-cols-3 lg:gap-8 md:grid md:grid-cols-1 md:gap-8 overflow-hidden">
         {data?.map((photo, index) => (
           <div key={index}>
