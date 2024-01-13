@@ -2,9 +2,11 @@
 import toast from 'react-hot-toast';
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { RxCrossCircled } from "react-icons/rx";
-// import { useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation';
 
 export default function page() {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
@@ -17,13 +19,21 @@ export default function page() {
   // const { data: session } = useSession();
   // const token = session?.user.token;
   const currentPage = usePathname();
-  const sliced = currentPage.slice(33);
-  const fittingname = sliced.charAt(0).toUpperCase() + sliced.slice(1);
+  const router = useRouter();
+  const sliced = currentPage.slice(29);
+  const granite = sliced.charAt(0).toUpperCase() + sliced.slice(1);
+
+  const searchParams = useSearchParams();
+  const size = searchParams.get("value");
+  
+  const url = size ? `${process.env.NEXT_PUBLIC_HOST}/granite/photos/?granite=${granite}&thick=${size}` :
+    `${process.env.NEXT_PUBLIC_HOST}/granite/photos/?granite=${granite}`;
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/cpfittings/photos/?fittingname=${fittingname}`);
+        const response = await fetch(url);
         const data = await response.json();
         setData(data);
         setPhotos(data);
@@ -35,7 +45,7 @@ export default function page() {
     };
 
     fetchData();
-  }, []);
+  }, [size]);
 
   if (loading) return <h1>LOADING...</h1>;
   if (error) console.log(error);
@@ -47,10 +57,6 @@ export default function page() {
   const handleCloseClick = () => {
     setSelectedPhoto(null);
   };
-
-  const handleSelect = () => {
-    setSelect(!select);
-  }
 
   const handleCheckboxChange = (photo) => {
 
@@ -71,7 +77,7 @@ export default function page() {
     let config = {
       method: 'delete',
       maxBodyLength: Infinity,
-      url: `${process.env.NEXT_PUBLIC_HOST}/delete/cpfitting/photos/`,
+      url: `${process.env.NEXT_PUBLIC_HOST}/delete/granite/photos/`,
       headers: {
         'Authorization': `Bearer ${token}`,
       },
@@ -93,39 +99,39 @@ export default function page() {
 
   return (
     <>
-      {/* {token && (
+     {/* {token && (
         <div>
           <button
             className="pl-4 ml-3 md:ml-0 bg-blue-950 hover:bg-white text-white  px-5 py-2 border border-blue-950 hover:text-blue-950"
-            onClick={handleSelect}>
+            onClick={()=>{setSelect(!select)}}>
             Select
           </button>
         </div>
       )} */}
-      <div className=" p-6 md:ml-0 m-2 h-auto grid grid-cols-1 gap-6 lg:grid lg:grid-cols-3 lg:gap-8 md:grid md:grid-cols-1 md:gap-8 overflow-hidden">
+      <div className="p-6 md:ml-0 m-2 h-auto grid grid-cols-1 gap-6 lg:grid lg:grid-cols-3 lg:gap-8 md:grid md:grid-cols-1 md:gap-8 overflow-hidden">
         {data?.map((photo, index) => (
-          <div key={index}>
-            {select && (<label className="">
-              <input
-                type="checkbox"
-                checked={selectedPhotos.includes(photo)}
-                onChange={() => handleCheckboxChange(photo)}
-                className="form-checkbox h-5 w-5 text-blue-600 mr-2"
-              />
-            </label>)}
-            <div
-              className="border-2 border-gray-200 hover:shadow-lg hover:shadow-gray-400/50 hover:ring-2 hover:ring-gray-200 h-[250px] w-[250px] hover:scale-105 transition-transform duration-300"
-              onClick={() => handlePhotoClick(photo)}
-              key={index}
-            >
-              <div className='flex items-center justify-center '>
-                <img src={photo.url} alt="floor" className='h-[200px]' />
-              </div>
-              <div className='h-[50px] text-center'>
-                {/* <p className='pt-3'>{photo.size}</p> */}
-              </div> 
+           <div key={index}>
+           {select && (<label className="">
+             <input
+               type="checkbox"
+               checked={selectedPhotos.includes(photo)}
+               onChange={() => handleCheckboxChange(photo)}
+               className="form-checkbox h-5 w-5 text-blue-600 mr-2"
+             />
+           </label>)}
+          <div
+            className="border-2 border-gray-200 hover:shadow-lg hover:shadow-gray-400/50 hover:ring-2 hover:ring-gray-200 h-[250px] w-[250px] hover:scale-105 transition-transform duration-300"
+            onClick={() => handlePhotoClick(photo)}
+            key={index}
+          >
+            <div className='flex items-center justify-center'>
+              <img src={photo.url} alt="floor" className='h-[200px]' />
             </div>
-          </div>))}
+            <div className=' h-[50px] text-center'>
+              <p className='pt-3'>{photo.size}</p>
+            </div>
+          </div>
+        </div>))}
         {selectedPhoto && (
           <div className='fixed top-[15%] md:left-[25%] left-0 p-10 pt-16 flex-col justify-center h-[500px] bg-gray-600 w-full md:w-1/2 lg:1/2 z-50'>
             <button

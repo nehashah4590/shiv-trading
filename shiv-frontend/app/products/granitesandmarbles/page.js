@@ -1,12 +1,12 @@
-'use client';
+"use client"
 import toast from 'react-hot-toast';
-import { useEffect } from 'react';
-import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { RxCrossCircled } from "react-icons/rx";
-// import { useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation';
 
-export default function page() {
+const page = () => {
+
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -16,14 +16,16 @@ export default function page() {
   const [selectedPhotos, setSelectedPhotos] = useState([]);
   // const { data: session } = useSession();
   // const token = session?.user.token;
-  const currentPage = usePathname();
-  const sliced = currentPage.slice(33);
-  const fittingname = sliced.charAt(0).toUpperCase() + sliced.slice(1);
+  
+  const searchParams = useSearchParams();
+  const size = searchParams.get("value");
+
+  const url = size ? `${process.env.NEXT_PUBLIC_HOST}/granite/photos/?thick=${size}` : `${process.env.NEXT_PUBLIC_HOST}/granite/photos`;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/cpfittings/photos/?fittingname=${fittingname}`);
+        const response = await fetch(url);
         const data = await response.json();
         setData(data);
         setPhotos(data);
@@ -35,7 +37,7 @@ export default function page() {
     };
 
     fetchData();
-  }, []);
+  }, [size]);
 
   if (loading) return <h1>LOADING...</h1>;
   if (error) console.log(error);
@@ -47,10 +49,6 @@ export default function page() {
   const handleCloseClick = () => {
     setSelectedPhoto(null);
   };
-
-  const handleSelect = () => {
-    setSelect(!select);
-  }
 
   const handleCheckboxChange = (photo) => {
 
@@ -71,7 +69,7 @@ export default function page() {
     let config = {
       method: 'delete',
       maxBodyLength: Infinity,
-      url: `${process.env.NEXT_PUBLIC_HOST}/delete/cpfitting/photos/`,
+      url: `${process.env.NEXT_PUBLIC_HOST}/delete/granite/photos/`,
       headers: {
         'Authorization': `Bearer ${token}`,
       },
@@ -97,12 +95,13 @@ export default function page() {
         <div>
           <button
             className="pl-4 ml-3 md:ml-0 bg-blue-950 hover:bg-white text-white  px-5 py-2 border border-blue-950 hover:text-blue-950"
-            onClick={handleSelect}>
+            onClick={{()=>{setSelect(!select)}}}>
             Select
           </button>
         </div>
       )} */}
-      <div className=" p-6 md:ml-0 m-2 h-auto grid grid-cols-1 gap-6 lg:grid lg:grid-cols-3 lg:gap-8 md:grid md:grid-cols-1 md:gap-8 overflow-hidden">
+      <div className="p-6 md:ml-0 m-2 h-auto grid grid-cols-1  gap-6 lg:grid lg:grid-cols-3 lg:gap-8 md:grid md:grid-cols-1 md:gap-8 overflow-hidden">
+
         {data?.map((photo, index) => (
           <div key={index}>
             {select && (<label className="">
@@ -118,12 +117,12 @@ export default function page() {
               onClick={() => handlePhotoClick(photo)}
               key={index}
             >
-              <div className='flex items-center justify-center '>
+              <div className='flex items-center justify-center'>
                 <img src={photo.url} alt="floor" className='h-[200px]' />
               </div>
-              <div className='h-[50px] text-center'>
-                {/* <p className='pt-3'>{photo.size}</p> */}
-              </div> 
+              <div className=' h-[50px] text-center'>
+                <p className='pt-3'>{photo.size}</p>
+              </div>
             </div>
           </div>))}
         {selectedPhoto && (
@@ -142,7 +141,7 @@ export default function page() {
                   alt="large-view"
                   className='md:w-[500px] md:h-[350px] w-full h-[300px] '
                 />
-                <p className='bg-gray-300 text-center py-4 mt-0 flex justify-center text-sm'>
+                <p className='bg-gray-300 text-center py-4 mt-0 flex justify-center'>
                   {selectedPhoto.description}
                 </p>
               </div>
@@ -157,7 +156,6 @@ export default function page() {
       </button>}
     </>
   );
-}
+};
 
-
-
+export default page;

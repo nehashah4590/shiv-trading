@@ -25,7 +25,6 @@ export default function page() {
         const data = await response.json();
         setData(data);
         setPhotos(data);
-        console.log("asa",data);
         setLoading(false);
       } catch (error) {
         setError(error);
