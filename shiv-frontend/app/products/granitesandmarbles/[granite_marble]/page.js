@@ -23,9 +23,8 @@ export default function page() {
   const sliced = currentPage.slice(29);
   const granite = sliced.charAt(0).toUpperCase() + sliced.slice(1);
 
-  // const searchParams = useSearchParams();
-  // const size = searchParams.get("value");
-  const size = null;
+  const searchParams = useSearchParams();
+  const size = searchParams.get("value");
   
   const url = size ? `${process.env.NEXT_PUBLIC_HOST}/granite/photos/?granite=${granite}&thick=${size}` :
     `${process.env.NEXT_PUBLIC_HOST}/granite/photos/?granite=${granite}`;

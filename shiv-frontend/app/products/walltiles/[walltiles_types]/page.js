@@ -22,9 +22,8 @@ export default function page() {
   
   const room = sliced.charAt(0).toUpperCase() + sliced.slice(1);
   const tiles="Wall Tiles";
-  // const searchParams = useSearchParams();
-  // const size = searchParams.get("value");
-  const size = null;
+  const searchParams = useSearchParams();
+  const size = searchParams.get("value");
   const url = size ? `${process.env.NEXT_PUBLIC_HOST}/tiles/photos/?product=${tiles}&size=${size}&room=${room}` : `${process.env.NEXT_PUBLIC_HOST}/tiles/photos/?product=${tiles}&size=${value}&room=${room}`;
   
   useEffect(() => {
