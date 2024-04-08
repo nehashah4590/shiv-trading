@@ -18,7 +18,7 @@ const page = () => {
   const token = session?.user.token;
   
   const searchParams = useSearchParams();
-  const size = searchParams.get("value");
+  const size = searchParams.get("value") || 0;
 
   const url = size ? `${process.env.NEXT_PUBLIC_HOST}/granite/photos/?thick=${size}` : `${process.env.NEXT_PUBLIC_HOST}/granite/photos`;
 

@@ -18,8 +18,9 @@ const page = () => {
   const token = session?.user.token;
 
   const tiles = "Floor Tiles";
-  const searchParams = useSearchParams();
-  const size = searchParams.get("value");
+  // const searchParams = useSearchParams();
+  // const size = searchParams.get("value");
+  const size = null;
   const url = size ? `${process.env.NEXT_PUBLIC_HOST}/tiles/photos/?product=${tiles}&size=${size}` : `${process.env.NEXT_PUBLIC_HOST}/tiles/photos/?product=${tiles}`;
 
   useEffect(() => {
